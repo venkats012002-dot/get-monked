@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Get Monké‑d
 
-## Getting Started
+> They see just a monkey meme, I see mankind unmasked.
 
-First, run the development server:
+A whimsical web app that pairs portraits of contemplative monkeys with raw, first-generation-human-energy existential one-liners. Built with Next.js 16, Tailwind v4, and a dash of Claude.
+
+Inspired by [@philosophymonkeyofficial](https://www.instagram.com/philosophymonkeyofficial) on Instagram.
+
+## Stack
+
+- Next.js 16 (App Router) + React 19
+- Tailwind CSS v4
+- shadcn-style components on Radix UI primitives
+- Sonner toasts, Lucide icons
+- Self-hosted monke portraits in `public/monkeys/`
+- Quotes pool in `public/quotes.json`
+
+## Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Expanding the quote pool
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app ships with 80 seed quotes in `public/quotes.json`. To grow this pool with fresh, AI-generated quotes:
 
-## Learn More
+```bash
+# 1. Set your Anthropic API key
+echo "ANTHROPIC_API_KEY=sk-ant-..." > .env.local
 
-To learn more about Next.js, take a look at the following resources:
+# 2. Run the generator (default: 2000 quotes)
+npx tsx scripts/generate-quotes.ts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Custom target / batch size
+TARGET=5000 BATCH=80 npx tsx scripts/generate-quotes.ts
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The script uses `claude-haiku-4-5` with prompt caching (the system prompt is cached across batches so most of each request is billed at ~10% of standard input cost). Generating 2000 quotes runs about $0.20–$0.40.
 
-## Deploy on Vercel
+The output overwrites `public/quotes.json`. Re-running adds variety; the script dedupes within a single run but won't dedupe against the existing file (re-run from scratch when expanding).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Adding more monkey images
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Drop additional PNGs into `public/monkeys/` named `monke-N.png` and update the count loop in `lib/providers/image-provider.ts`.
+
+## Deploy
+
+Push to a Vercel-linked GitHub repo. No env vars needed at runtime — quote generation is a build/dev-time script, the deployed site reads the static `quotes.json`.
