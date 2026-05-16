@@ -21,7 +21,7 @@ export function HistoryRail() {
         Recent Generations
       </h3>
       <ScrollArea className="w-full whitespace-nowrap">
-        <div className="flex space-x-3 pb-2">
+        <div className="flex w-max space-x-3 pb-3">
           <TooltipProvider>
             {state.history.map((generation) => (
               <Tooltip key={generation.id}>
