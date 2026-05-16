@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "sync:monkeys": "tsx scripts/sync-monkeys.ts",
+    "predev": "tsx scripts/sync-monkeys.ts",
+    "prebuild": "tsx scripts/sync-monkeys.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"

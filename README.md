@@ -45,7 +45,13 @@ The output overwrites `public/quotes.json`. Re-running adds variety; the script 
 
 ## Adding more monkey images
 
-Drop additional PNGs into `public/monkeys/` named `monke-N.png` and update the count loop in `lib/providers/image-provider.ts`.
+Drop additional images into `public/monkeys/` named `monke-N.{png,jpg,jpeg,webp}` (pick the next free `N`). The manifest at `public/monkeys/index.json` is regenerated automatically on `npm run dev` / `npm run build`. You can also regenerate it explicitly:
+
+```bash
+npm run sync:monkeys
+```
+
+If dev is already running when you drop a new image in, restart it (or run `npm run sync:monkeys` and refresh — the manifest is fetched client-side).
 
 ## Deploy
 

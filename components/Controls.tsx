@@ -39,7 +39,7 @@ export function Controls() {
         <button
           onClick={handleGenerate}
           disabled={state.isLoading}
-          className="bg-[#121212] rounded-full h-[64px] px-6 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#1a1a1a] transition-colors flex items-center gap-3"
+          className="bg-[#121212] rounded-full h-[64px] px-6 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#1a1a1a] transition-colors flex items-center gap-3"
         >
           <Sparkles size={24} className="text-[#f0f0f0]" />
           <span className="font-pt-serif font-bold text-[#f0f0f0] text-[20px] sm:text-[24px]">
@@ -50,7 +50,7 @@ export function Controls() {
         {state.currentGeneration && !state.isLoading && (
           <button
             onClick={handleDownload}
-            className="bg-[#f0f0f0] text-[#161616] rounded-full h-[64px] px-6 hover:opacity-90 transition-opacity flex items-center gap-2 border border-[rgba(0,0,0,0.1)]"
+            className="bg-[#f0f0f0] text-[#161616] rounded-full h-[64px] px-6 cursor-pointer hover:opacity-90 transition-opacity flex items-center gap-2 border border-[rgba(0,0,0,0.1)]"
             aria-label="Download composite image"
           >
             <Download size={20} />

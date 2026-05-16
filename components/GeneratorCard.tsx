@@ -5,27 +5,12 @@ import { Card } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 import { useGenerator } from "@/lib/store/generator-store";
 import { ImageWithFallback } from "./ImageWithFallback";
-import { Copy, Check } from "lucide-react";
-import { toast } from "sonner";
 
 export function GeneratorCard() {
   const { state } = useGenerator();
   const [imageError, setImageError] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   const { currentGeneration, isLoading, error } = state;
-
-  const handleCopyQuote = async () => {
-    if (!currentGeneration) return;
-    try {
-      await navigator.clipboard.writeText(currentGeneration.quote);
-      setCopied(true);
-      toast.success("Quote copied");
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      toast.error("Couldn't copy quote");
-    }
-  };
 
   return (
     <Card className="w-full max-w-lg mx-auto overflow-hidden bg-transparent rounded-[32px] gap-0 border-0 p-0">
@@ -50,15 +35,6 @@ export function GeneratorCard() {
               onError={() => setImageError(true)}
               onLoad={() => setImageError(false)}
             />
-
-            <button
-              onClick={handleCopyQuote}
-              className="absolute top-4 right-4 flex items-center gap-1.5 bg-[#f0f0f0] text-[#161616] rounded-full px-3 py-1.5 text-xs hover:opacity-90 transition-opacity font-pt-serif"
-              aria-label="Copy quote"
-            >
-              {copied ? <Check size={12} /> : <Copy size={12} />}
-              {copied ? "copied" : "copy quote"}
-            </button>
 
             <div className="absolute inset-0 flex items-end justify-center p-6">
               <div className="p-4 max-w-[95%]">
